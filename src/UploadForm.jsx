@@ -17,7 +17,7 @@ export default function UploadForm() {
     formData.append("file", file);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/upload`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/HttpTrigger1?code=${import.meta.env.VITE_FUNCTION_KEY}`, {
         method: "POST",
         body: formData,
       });
