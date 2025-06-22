@@ -15,8 +15,9 @@ export default function FileList() {
           throw new Error('Failed to fetch files');
         }
 
+        // The API returns the array directly, not wrapped in a 'files' property
         const data = await response.json();
-        setFiles(data.files);
+        setFiles(Array.isArray(data) ? data : []);
         setLoading(false);
       } catch (err) {
         console.error('Error fetching files:', err);
@@ -42,7 +43,8 @@ export default function FileList() {
               {file.name.substring(file.name.indexOf('-') + 1)}
             </a>
             <span className="file-size">
-              ({Math.round(file.size / 1024)} KB)
+              {file.properties && file.properties.contentLength &&
+                `(${Math.round(file.properties.contentLength / 1024)} KB)`}
             </span>
           </li>
         ))}
